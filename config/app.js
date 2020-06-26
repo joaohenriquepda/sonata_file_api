@@ -201,7 +201,7 @@ module.exports = {
     */
     console: {
       driver: 'console',
-      name: 'adonis-app',
+      name: Env.get('APP_NAME', 'AdonisJs'),
       level: 'info'
     },
 
