@@ -17,5 +17,8 @@
 const Route = use('Route')
 
 Route.get('/', () => {
-  return { greeting: 'Hello world in JSON' }
+  return { greeting: 'Hello, welcome to SONATA File API' }
 })
+
+// USERS Routes
+Route.post('users', 'UserController.create')
