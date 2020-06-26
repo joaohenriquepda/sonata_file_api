@@ -9,7 +9,7 @@ class UserController {
 
     async create({ request, response }) {
 
-        Logger.debug("Register new user")
+        Logger.info("Register new user")
         try {
             const data = request.only(['name', 'email', 'password'])
             const userExists = await User.findBy('email', data.email)
@@ -21,7 +21,7 @@ class UserController {
             }
 
             const user = await User.create(data)
-            Logger.info('New user registed')
+            Logger.debug('New user registed')
             return user
 
         } catch (error) {
@@ -34,6 +34,29 @@ class UserController {
             })
         }
     }
+
+    async show({ response, params, auth }) {
+
+        Logger.info("Show specific user")
+
+        try {
+            await auth.check();
+            const user = await User.find(params.id);
+            Logger.debug('Return user registed')
+            return user;
+        } catch (error) {
+            Logger.error(error)
+            response.status(error.status).json({
+                error: {
+                    message: "Error when show information",
+                    error: error.message
+                }
+            })
+        }
+    }
+
+
+
 
 }
 
