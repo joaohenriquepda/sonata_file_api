@@ -20,5 +20,9 @@ Route.get('/', () => {
   return { greeting: 'Hello, welcome to SONATA File API' }
 })
 
+// LOGIN Route
+Route.post('/sessions', 'SessionController.create')
+
+
 // USERS Routes
 Route.post('users', 'UserController.create')

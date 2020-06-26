@@ -15,7 +15,7 @@ class UserController {
             const userExists = await User.findBy('email', data.email)
 
             if (userExists) {
-                return response
+                response
                     .status(400)
                     .send({ message: { error: 'User already registered' } })
             }
@@ -26,13 +26,14 @@ class UserController {
 
         } catch (error) {
             Logger.error(error)
-            return response.status(error.status).send(error)
+            response.status(error.status).json({
+                error: {
+                    message: "Error when register",
+                    error: error.message
+                }
+            })
         }
     }
-
-
-
-
 
 }
 
