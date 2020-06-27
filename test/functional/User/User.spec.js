@@ -1,8 +1,7 @@
-// 'use strict'
 
 const UserController = require("../../../app/Controllers/Http/UserController")
 
-const { test, trait, afterEach, beforeEach } = use('Test/Suite')('User Registration')
+const { test, trait, afterEach, beforeEach } = use('Test/Suite')('User Controller')
 
 trait("Test/ApiClient")
 trait("DatabaseTransactions")

@@ -1,0 +1,1 @@
+const { test, trait, afterEach, beforeEach } = use('Test/Suite')('File Controller')
