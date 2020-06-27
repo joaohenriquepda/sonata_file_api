@@ -10,28 +10,34 @@ class UserController {
     async create({ request, response }) {
 
         Logger.info("Register new user")
+
         try {
             const data = request.only(['name', 'email', 'password'])
             const userExists = await User.findBy('email', data.email)
 
             if (userExists) {
-                response
+                return response
                     .status(400)
-                    .send({ message: { error: 'User already registered' } })
+                    .json({
+                        error: {
+                            message: 'User already registered'
+                        }
+                    })
             }
-
             const user = await User.create(data)
             Logger.debug('New user registed')
             return user
 
         } catch (error) {
             Logger.error(error)
-            response.status(error.status).json({
-                error: {
-                    message: "Error when register",
-                    error: error.message
-                }
-            })
+            return response
+                .status(400)
+                .json({
+                    error: {
+                        message: "Error when register",
+                        error: error
+                    }
+                })
         }
     }
 

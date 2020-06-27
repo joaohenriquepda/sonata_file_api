@@ -8,6 +8,12 @@
     "start": "node server.js",
     "test": "node ace test"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "adonis test",
+      "pre-push": "npm test"
+    }
+  },
   "keywords": [
     "adonisjs",
     "adonis-app"
@@ -27,7 +33,9 @@
     "@adonisjs/vow": "^1.0.17",
     "pg": "^8.2.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "husky": "^4.2.5"
+  },
   "autoload": {
     "App": "./app"
   }

@@ -30,6 +30,7 @@ module.exports = {
   appKey: Env.getOrFail('APP_KEY'),
 
   http: {
+
     /*
     |--------------------------------------------------------------------------
     | Allow Method Spoofing
@@ -41,8 +42,9 @@ module.exports = {
     | below value to true.
     |
     */
-    allowMethodSpoofing: true,
-
+   allowMethodSpoofing: true,
+   loggerEnv: ['development', 'production'],
+   
     /*
     |--------------------------------------------------------------------------
     | Trust Proxy
@@ -202,7 +204,7 @@ module.exports = {
     console: {
       driver: 'console',
       name: Env.get('APP_NAME', 'AdonisJs'),
-      level: 'info'
+      level: 'debug' 
     },
 
     /*
