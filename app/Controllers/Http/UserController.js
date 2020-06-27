@@ -12,7 +12,7 @@ class UserController {
         Logger.info("Register new user")
 
         try {
-            const data = request.only(['name', 'email', 'password'])
+            const data = request.all(['name', 'email', 'password'])
             const userExists = await User.findBy('email', data.email)
 
             if (userExists) {
@@ -52,10 +52,10 @@ class UserController {
             return user;
         } catch (error) {
             Logger.error(error)
-            response.status(error.status).json({
+            response.status(400).json({
                 error: {
                     message: "Error when show information",
-                    error: error.message
+                    error: error
                 }
             })
         }
