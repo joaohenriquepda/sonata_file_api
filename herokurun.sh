@@ -1,3 +1,3 @@
 #!/bin/bash
 
-heroku run bash --app isacplus-api 
+heroku run bash --app sonata-api 
