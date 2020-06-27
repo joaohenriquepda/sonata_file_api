@@ -10,7 +10,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "adonis test",
+      "pre-commit": "npm test",
       "pre-push": "npm test"
     }
   },
