@@ -15,10 +15,26 @@ test('Success when upload file', async ({ client, assert }) => {
 
     const response = await client
         .post('/files')
+        .field('name', 'filename')
         .attach('file', Helpers.tmpPath('file_test.pdf'))
         .end()
 
-    // response.assertStatus(200)
+    response.assertStatus(200)
+
+})
+
+
+test('Success when upload file', async ({ client, assert }) => {
+
+    const response = await client
+        .post('/files')
+        .field('name', 'filename_large')
+        .attach('file', Helpers.tmpPath('file_test_large.pdf'))
+        .end()
+
+    response.assertStatus(400)
+    response.assertJSONSubset({ error: "File size should be less than 300KB" })
+
 })
 
 
@@ -29,7 +45,7 @@ test('Error when upload file with wrong parameter', async ({ client, assert }) =
         .attach('archive', Helpers.tmpPath('file_test.pdf'))
         .end()
 
-    // response.assertStatus(400)
+    response.assertStatus(400)
 })
 
 
@@ -37,7 +53,8 @@ test('Error when upload file', async ({ client, assert }) => {
 
     const response = await client
         .post('/files')
+        .field('name', 'filename_wrong')
         .end()
 
-    // response.assertStatus(400)
+    response.assertStatus(400)
 })
