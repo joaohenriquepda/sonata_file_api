@@ -15,7 +15,9 @@ class FileController {
 
         try {
 
-           
+            await auth.check();
+            const user = await auth.getUser()
+
             const data = request.all();
 
             const validationOptions = {
@@ -43,10 +45,11 @@ class FileController {
 
             const file_saved = await File.create({
                 name: data.name,
-                file_name: moment.now() + data.name + '.pdf',
+                file_name: `${moment.now()}_${data.name}.pdf`,
                 description: data.description,
                 size: file.size,
-                type: file.extname
+                type: file.extname,
+                user_id: user.id
             })
 
             Logger.debug("File saved")

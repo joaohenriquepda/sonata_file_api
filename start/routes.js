@@ -30,4 +30,4 @@ Route.get('users/:id', 'UserController.show').middleware(['auth:jwt'])
 
 
 // FILES Routes
-Route.post('/files', 'FileController.upload');
+Route.post('/files', 'FileController.upload').middleware(['auth']);
