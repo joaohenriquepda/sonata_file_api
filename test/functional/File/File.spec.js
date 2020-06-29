@@ -144,19 +144,19 @@ test('Success when show file', async ({ client, assert }) => {
 
 // })
 
-test('File not exist', async ({ client, assert }) => {
+// test('File not exist', async ({ client, assert }) => {
 
-    const user = await Factory.model('App/Models/User').create()
-    const file = await Factory.model('App/Models/File').create({ id: user.id, filename: 'filename' })
+//     const user = await Factory.model('App/Models/User').create()
+//     const file = await Factory.model('App/Models/File').create({ id: user.id, filename: 'filename' })
 
-    const response = await client
-        .get(`/files/99999`)
-        .loginVia(user, 'jwt')
-        .end()
+//     const response = await client
+//         .get(`/files/99999`)
+//         .loginVia(user, 'jwt')
+//         .end()
 
-    response.assertStatus(404)
-    response.assertJSONSubset({
-        error: "File not exist"
-    })
+//     response.assertStatus(404)
+//     response.assertJSONSubset({
+//         error: "File not exist"
+//     })
 
-})
+// })

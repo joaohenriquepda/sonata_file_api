@@ -9,6 +9,20 @@ class File extends Model {
         return this.belongsTo('App/Models/User')
     }
 
+    static get computed () {
+        return ['fullname']
+      }
+    
+      getFullname ({ id, name, description, size }) {
+        return {
+            id,
+            name,
+            description,
+            size
+        }
+      }
+
+
 }
 
 module.exports = File

@@ -64,7 +64,6 @@ class FileController {
             await auth.check()
             const user = await auth.getUser()
             const file = await File.findBy('id', params.id)
-            // .setVisible(['id', 'name', 'description', 'size']).fetch()
 
             if (!file) {
                 return response.notFound({ error: 'File not exist' })
@@ -74,8 +73,9 @@ class FileController {
                 return response.unauthorized({ error: 'Not authorized file' })
             }
 
+            console.log(file.toJSON().fullname) // firstname + lastname
             // id, nome do documento, conteúdo em texto e tamanho do arquivo
-            return response.ok(file)
+            return response.ok(file.toJSON().fullname)
 
 
         } catch (error) {
