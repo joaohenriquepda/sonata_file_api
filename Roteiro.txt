@@ -1,0 +1,54 @@
+
+
+Apresentação Teste SONATA
+
+Boa tarde, algumas informações podem ser encontradas no README.md que 
+se encontra na raíz do projeto, lá podemos encontrar informações de setup de ambiente
+de execução de teste e o processo para verificar automaticamente os testes com base em pre-commit.
+
+O código se encontra disponível em:
+https://github.com/joaohenriquepda/sonata_file_api
+
+
+Explicação do sistema
+
+Para iniciar a resolução do problema decidi começar pelo registro do 
+usuário, recebo como requisição POST::{ "nome", "email", "password" }. 
+O email deve ser único, realizo vericação se o usuário já se encontra registrado, 
+caso registrado retorno o erro 400 juntamente com a mensagem de erro caso contrário
+é confirmado o registro do usuário.
+
+Com o usuário do sistema devidamente registrado passo para a controller de autenticação 
+no sistema. Para conseguir o TOKEN de acesso que é usado para verificar o usuário no sistema
+é preciso informar por requisição POST::{ "email", "password" }.
+O sistema realiza a verificação necessária para retornar o TOKEN, em caso de erro é disparado 
+informação da negativa. 
+
+Agora que o usuário já consegue ter o TOKEN de acesso consege realizar o upload de 
+arquivos no sistema. Informando o TOKEN de acesso na HEADER da requisição ele passar 
+as informações do  arquivo através de um formulário multipart POST::{ "file", "name", "description"}. 
+O sistema faz a identificação do usuário através do TOKEN informado registrando o file 
+como pertecente ao usuário. As mensagens de erro são enviadas caso o arquivo não possa ser salvo ou
+o modelo apresente algum problema de registro.
+
+Como agora já temos um usuário registrado e um arquivo salvo e associado ao seu perfil 
+podemos visualizar as informações e arquivos que esse usuário tem em sua conta.
+Mais uma vez o usuário deve informar no HEADER do da requisição GET o TOKEN de acesso ao sistema 
+
+O sistema recupera as informações do usuário juntamente com todos os arquivos associados ao perfil.
+
+Caso o usuário queira visualizar mais informações sobre um arquivo ele poderá 
+acessar atráves de uma requisição GET informando mais uma vez o TOKEN de acesso 
+e o id do arquivo pela url, o sistema irá verificar as informaçoes do usuário e 
+verificar se o arquivo realmente pertence ao usuário informado, caso negativo 
+ele não irá exibir as informações
+
+
+Os testes do sistema guiaram o desenvolvimento e refatoração dos mesmo. Pelo histórico de commits
+é possível acompanhar a evolução dos códigos e testes.
+
+
+O sistema se encontra em produção no sevidor HEROKU
+https://sonata-api-file.herokuapp.com/
+
+

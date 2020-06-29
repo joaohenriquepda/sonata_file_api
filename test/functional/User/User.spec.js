@@ -72,7 +72,7 @@ test('Error when miss all attributes', async ({ client }) => {
 
 test('Error when tries show User without Authentication', async ({ client }) => {
 
-    const response = await client.get('/users/1').end()
+    const response = await client.get('/users').end()
     response.assertStatus(401)
 
 })
@@ -81,7 +81,7 @@ test('Success when create show information', async ({ client }) => {
 
     const user = await Factory.model('App/Models/User').create()
 
-    const response = await client.get(`/users/${user.id}`)
+    const response = await client.get(`/users`)
         .loginVia(user, 'jwt')
         .send(user)
         .end()

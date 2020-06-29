@@ -73,8 +73,6 @@ class FileController {
                 return response.unauthorized({ error: 'Not authorized file' })
             }
 
-            console.log(file.toJSON().fullname) // firstname + lastname
-            // id, nome do documento, conteúdo em texto e tamanho do arquivo
             return response.ok(file.toJSON().fullname)
 
 
