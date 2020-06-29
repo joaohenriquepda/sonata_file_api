@@ -120,6 +120,30 @@ test('Success when show file', async ({ client, assert }) => {
 
 })
 
+
+// test('Not Authorized show file', async ({ client, assert }) => {
+
+//     const user = await Factory.model('App/Models/User').create()
+//     const file = await Factory.model('App/Models/File').create({ id: user.id, filename: 'filename' })
+
+//     const userN = await Factory.model('App/Models/User').create()
+//     const fileN = await Factory.model('App/Models/File').create({ id: userN.id, filename: 'filename1' })
+
+//     console.log(user);
+//     console.log(userN);
+
+//     const response = await client
+//         .get(`/files/${file.id}`)
+//         .loginVia(userN, 'jwt')
+//         .end()
+
+//     response.assertStatus(401)
+//     response.assertJSONSubset({
+//         error: "Not authorized file"
+//     })
+
+// })
+
 test('File not exist', async ({ client, assert }) => {
 
     const user = await Factory.model('App/Models/User').create()
