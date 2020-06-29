@@ -31,7 +31,7 @@ class UserController {
         } catch (error) {
             Logger.error(error)
             return response
-                .status(400)
+                .status(401)
                 .json({
                     error: {
                         message: "Error when register",
@@ -47,9 +47,14 @@ class UserController {
 
         try {
             await auth.check();
-            const user = await User.find(params.id);
+
+            const user = await auth.getUser()
+            user.files = await user.files().setVisible(['id', 'name']).fetch()
+
             Logger.debug('Return user registed')
-            return user;
+
+            return response.status(200).json(user)
+
         } catch (error) {
             Logger.error(error)
             response.status(400).json({

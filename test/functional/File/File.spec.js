@@ -38,9 +38,6 @@ test('Error when upload file if not authenticated', async ({ client, assert }) =
         .field('description', 'filename in environment test')
         .attach('file', Helpers.tmpPath('file_test.pdf'))
         .end()
-    
-    console.log(response);
-        
 
     response.assertStatus(401)
 
@@ -107,4 +104,35 @@ test('Error when upload file', async ({ client, assert }) => {
         .end()
 
     response.assertStatus(400)
+})
+
+test('Success when show file', async ({ client, assert }) => {
+
+    const user = await Factory.model('App/Models/User').create()
+    const file = await Factory.model('App/Models/File').create({ id: user.id, filename: 'filename' })
+ 
+    const response = await client
+        .get(`/files/${file.id}`)
+        .loginVia(user, 'jwt')
+        .end()
+
+    response.assertStatus(200)
+
+})
+
+test('File not exist', async ({ client, assert }) => {
+
+    const user = await Factory.model('App/Models/User').create()
+    const file = await Factory.model('App/Models/File').create({ id: user.id, filename: 'filename' })
+
+    const response = await client
+        .get(`/files/99999`)
+        .loginVia(user, 'jwt')
+        .end()
+
+    response.assertStatus(404)
+    response.assertJSONSubset({
+        error: "File not exist"
+    })
+
 })

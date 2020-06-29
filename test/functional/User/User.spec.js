@@ -49,7 +49,7 @@ test('Error when miss email', async ({ client }) => {
 
     const response = await client.post('/users').send(user).end()
 
-    response.assertStatus(400)
+    response.assertStatus(401)
     response.assertJSONSubset({
         error: {
             message: "Error when register"
@@ -61,7 +61,7 @@ test('Error when miss all attributes', async ({ client }) => {
 
     const response = await client.post('/users').send().end()
 
-    response.assertStatus(400)
+    response.assertStatus(401)
     response.assertJSONSubset({
         error: {
             message: "Error when register"
@@ -77,4 +77,15 @@ test('Error when tries show User without Authentication', async ({ client }) => 
 
 })
 
+test('Success when create show information', async ({ client }) => {
 
+    const user = await Factory.model('App/Models/User').create()
+
+    const response = await client.get(`/users/${user.id}`)
+        .loginVia(user, 'jwt')
+        .send(user)
+        .end()
+
+    response.assertStatus(200)
+
+})

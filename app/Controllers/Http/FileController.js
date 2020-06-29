@@ -27,8 +27,8 @@ class FileController {
 
             const file = request.file('file', validationOptions);
 
-            await file.move(Helpers.tmpPath('uploads'), {
-                name: moment.now() + data.name + '.pdf',
+            await file.move(Helpers.tmpPath(`uploads/${user.email}`), {
+                name: `${moment.now()}_${data.name}.pdf`,
                 overwrite: false,
             });
 
@@ -67,6 +67,45 @@ class FileController {
                 })
         }
 
+    }
+
+
+    async show({ request, response, auth, params }) {
+
+        try {
+            await auth.check()
+            const user = await auth.getUser()
+            const file = await File.findBy('id', params.id)
+            // .setVisible(['id', 'name', 'description', 'size']).fetch()
+
+            if (!file) {
+                return response
+                    .status(404)
+                    .json({
+                        error: 'File not exist'
+                    })
+            }
+
+            if (file.user_id != user.id) {
+                return response
+                    .status(401)
+                    .json({
+                        error: 'Not authorized file'
+                    })
+            }
+
+            // id, nome do documento, conteúdo em texto e tamanho do arquivo
+            return response.status(200).json(file)
+
+
+        } catch (error) {
+            Logger.error(error)
+            return response
+                .status(400)
+                .json({
+                    error: error
+                })
+        }
     }
 
 }

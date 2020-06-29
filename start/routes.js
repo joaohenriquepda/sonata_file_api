@@ -26,8 +26,9 @@ Route.post('/sessions', 'SessionController.create')
 
 // USERS Routes
 Route.post('users', 'UserController.create')
-Route.get('users/:id', 'UserController.show').middleware(['auth:jwt'])
+Route.get('users/:id', 'UserController.show').middleware(['auth'])
 
 
 // FILES Routes
 Route.post('/files', 'FileController.upload').middleware(['auth']);
+Route.get('/files/:id', 'FileController.show').middleware(['auth']);
