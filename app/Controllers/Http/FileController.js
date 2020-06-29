@@ -34,11 +34,7 @@ class FileController {
 
             if (!file.moved()) {
                 Logger.error(file.error())
-                return response
-                    .status(400)
-                    .json({
-                        error: file.error().message
-                    })
+                return response.badRequest({ error: file.error().message })
             }
 
             Logger.debug("File saved")
@@ -54,21 +50,13 @@ class FileController {
 
             Logger.debug("File saved")
 
-            return response
-                .status(200)
-                .json(file_saved)
+            return response.ok(file_saved)
 
         } catch (error) {
             Logger.error(error)
-            return response
-                .status(400)
-                .json({
-                    error: error
-                })
+            return response.badRequest({ error: error })
         }
-
     }
-
 
     async show({ request, response, auth, params }) {
 
@@ -79,32 +67,20 @@ class FileController {
             // .setVisible(['id', 'name', 'description', 'size']).fetch()
 
             if (!file) {
-                return response
-                    .status(404)
-                    .json({
-                        error: 'File not exist'
-                    })
+                return response.notFound({ error: 'File not exist' })
             }
 
             if (file.user_id != user.id) {
-                return response
-                    .status(401)
-                    .json({
-                        error: 'Not authorized file'
-                    })
+                return response.unauthorized({ error: 'Not authorized file' })
             }
 
             // id, nome do documento, conteúdo em texto e tamanho do arquivo
-            return response.status(200).json(file)
+            return response.ok(file)
 
 
         } catch (error) {
             Logger.error(error)
-            return response
-                .status(400)
-                .json({
-                    error: error
-                })
+            return response.badRequest({ error: error })
         }
     }
 

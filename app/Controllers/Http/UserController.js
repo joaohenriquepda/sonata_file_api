@@ -17,8 +17,7 @@ class UserController {
 
             if (userExists) {
                 return response
-                    .status(400)
-                    .json({
+                    .badRequest({
                         error: {
                             message: 'User already registered'
                         }
@@ -31,8 +30,7 @@ class UserController {
         } catch (error) {
             Logger.error(error)
             return response
-                .status(401)
-                .json({
+                .unauthorized({
                     error: {
                         message: "Error when register",
                         error: error
@@ -53,11 +51,11 @@ class UserController {
 
             Logger.debug('Return user registed')
 
-            return response.status(200).json(user)
+            return response.ok(user)
 
         } catch (error) {
             Logger.error(error)
-            response.status(400).json({
+            response.badRequest({
                 error: {
                     message: "Error when show information",
                     error: error
